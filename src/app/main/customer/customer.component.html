@@ -8,7 +8,7 @@
 
   <div class="row">
     <div class="d-flex">
-      <button class="btn btn-success ms-auto mb-2" (click)="openModal(content, customerAdd)" >Adicionar Pessoa</button>
+      <button class="btn btn-primary ms-auto mb-2" (click)="openModal(content, customerAdd)" >Adicionar Cliente</button>
     </div>
     <div class="col-lg-12">
       <div class="card">
@@ -16,7 +16,7 @@
 
           <div class="table-responsive">
             <table class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
-              <thead class="bg-soft bg-primary">
+              <thead class="bg-soft bg-secondary">
                 <tr>
                   <th>Nome</th>
                   <th>Email</th>
@@ -54,7 +54,7 @@
   <!-- Modal -->
   <ng-template #content role="document" let-modal>
     <div class="modal-header">
-      <h5 class="modal-title mt-0">{{form.personId.value ? 'Alterar Pessoa' : 'Adicionar nova Pessoa' }}</h5>
+      <h5 class="modal-title mt-0">{{form.personId.value ? 'Alterar cliente' : 'Adicionar novo cliente' }}</h5>
       <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
@@ -177,7 +177,7 @@
 
           </div>
         </div>
-        <button type="submit" [disabled]="!customerForm.valid" class="btn btn-success" id="btn-save-event">
+        <button type="submit" [disabled]="!customerForm.valid" class="btn btn-primary" id="btn-save-event">
           {{form.personId.value ? 'Alterar' : 'Salvar'}}
         </button>
       </form>
