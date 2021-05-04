@@ -1,0 +1,187 @@
+
+<div class="container-fluid">
+
+  <!-- start page title -->
+  <app-page-title title="Gerenciar Clientes" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <!-- end page title -->
+  <app-loader></app-loader>
+
+  <div class="row">
+    <div class="d-flex">
+      <button class="btn btn-success ms-auto mb-2" (click)="openModal(content, customerAdd)" >Adicionar Pessoa</button>
+    </div>
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+
+          <div class="table-responsive">
+            <table class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
+              <thead class="bg-soft bg-primary">
+                <tr>
+                  <th>Nome</th>
+                  <th>Email</th>
+                  <th>CPF</th>
+                  <th>Telefone</th>
+                  <th>Cidade</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let customer of customerDataPagination?.resultList">
+                  <th scope="row">{{ customer?.name }}</th>
+                  <td>{{ customer?.email}}</td>
+                  <td>{{ customer?.cpf}}</td>
+                  <td>{{ customer?.phone }}</td>
+                  <td>{{ customer?.address.city }}</td>
+                  <td>
+                    <div class="contact-links d-flex font-size-18">
+                      <div class="flex-fill">
+                        <a href="javascript: void(0);" (click)="openModal(content, customer)" ngbTooltip="Editar"><i class="bx bx-edit text-info"></i></a>
+                      </div>
+                      <div class="flex-fill">
+                        <a href="javascript: void(0);" (click)="deleteAccount(customer)" ngbTooltip="Deletar"><i class="bx bx-trash text-danger"></i></a>
+                      </div>
+                      </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <ng-template #content role="document" let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">{{form.personId.value ? 'Alterar Pessoa' : 'Adicionar nova Pessoa' }}</h5>
+      <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="savePerson()" [formGroup]="customerForm">
+        <div class="row">
+          <div class="col-12">
+            <div class="mb-3">
+              <label class="control-label">Nome</label>
+              <input class="form-control" placeholder="Digite Nome" type="text" name="name" maxlength="100"
+                formControlName="name" [ngClass]="{ 'is-invalid': form.name.hasError('required') && form.name.touched }" />
+              <div *ngIf="form.name.hasError('required') && form.name.touched" class="invalid-feedback">
+                <span *ngIf="form.name.hasError('required') && form.name.touched">O campo Nome é obrigatório</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="control-label">E-mail</label>
+              <input class="form-control" placeholder="Digite o E-mail" type="text" name="email" maxlength="90"
+                formControlName="email" [ngClass]="{'is-invalid': form.email.hasError('required') && form.email.touched}" />
+              <div *ngIf="form.email.hasError('required') && form.email.touched" class="invalid-feedback">
+                <span *ngIf="form.email.hasError('required') && form.email.touched">O campo E-mail é obrigatório</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="control-label">CPF</label>
+                  <input class="form-control" placeholder="Digite o CPF" formControlName="socialNumber" mask="000.000.000-00" [ngClass]="{'is-invalid': form.socialNumber.hasError('required') && form.socialNumber.touched}">
+                  <div *ngIf="form.socialNumber.hasError('required') && form.socialNumber.touched" class="invalid-feedback">
+                    <span *ngIf="form.socialNumber.hasError('required') && form.socialNumber.touched">O campo CPF é obrigatório</span>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="control-label">Telefone</label>
+                  <input class="form-control" placeholder="Digite o Telefone" type="text" name="fone" mask="(00) 00000-0000"
+                    formControlName="fone" [ngClass]="{'is-invalid': form.fone.hasError('required') && form.fone.touched}" />
+                  <div *ngIf="form.fone.hasError('required') && form.fone.touched" class="invalid-feedback">
+                    <span *ngIf="form.fone.hasError('required') && form.fone.touched">O campo Telefone é obrigatório</span>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+              <div class="row">
+                <div class="col-md-9">
+                  <div class="mb-3">
+                    <label class="control-label">Logradouro</label>
+                    <input class="form-control" placeholder="Digite o logradouro" type="text" name="street" maxlength="120"
+                      formControlName="street" [ngClass]="{'is-invalid': form.street.touched &&  form.street.hasError('required')}" />
+                      <div *ngIf="form.street.touched &&  form.street.hasError('required')" class="invalid-feedback">
+                        <span *ngIf=" form.street.hasError('required')">O campo Logradouro é obrigatório.</span>
+                      </div>
+                  </div>
+
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="control-label">Número</label>
+                    <input class="form-control" placeholder="Digite o Número" type="text" name="number" maxlength="6"
+                      formControlName="number" [ngClass]="{'is-invalid': form.number.touched &&  form.number.hasError('required')}" />
+                      <div *ngIf="form.number.touched &&  form.number.hasError('required')" class="invalid-feedback">
+                        <span *ngIf=" form.number.hasError('required')">O campo Cep é obrigatório.</span>
+                      </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="mb-3">
+                    <label class="control-label">Bairro</label>
+                    <input class="form-control" placeholder="Digite o Bairro" type="text" name="neighborhood" maxlength="90"
+                      formControlName="neighborhood" [ngClass]="{'is-invalid': form.neighborhood.touched &&  form.neighborhood.hasError('required')}" />
+                      <div *ngIf="form.neighborhood.touched &&  form.neighborhood.hasError('required')" class="invalid-feedback">
+                        <span *ngIf=" form.neighborhood.hasError('required')">O campo Cep é obrigatório.</span>
+                      </div>
+                  </div>
+
+                </div>
+                <div class="col-md-4">
+                  <div class="mb-3">
+                    <label class="control-label">Cep</label>
+                    <input class="form-control" placeholder="Digite o Cep" type="text" name="zipCode" mask="99999-999"
+                      formControlName="zipCode" [ngClass]="{'is-invalid': form.zipCode.touched &&  form.zipCode.hasError('required')}" />
+                      <div *ngIf="form.zipCode.touched &&  form.zipCode.hasError('required')" class="invalid-feedback">
+                        <span *ngIf=" form.zipCode.hasError('required')">O campo Cep é obrigatório.</span>
+                      </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="control-label">Cidade</label>
+                    <input class="form-control" placeholder="Digite o Cidade" type="text" name="city" maxlength="120"
+                      formControlName="city" [ngClass]="{'is-invalid': form.city.touched &&  form.city.hasError('required')}" />
+                      <div *ngIf="form.city.touched &&  form.city.hasError('required')" class="invalid-feedback">
+                        <span *ngIf=" form.city.hasError('required')">O campo Cep é obrigatório.</span>
+                      </div>
+                  </div>
+
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="control-label">Estado</label>
+                    <input class="form-control" placeholder="Digite o Estado" type="text" name="state" maxlength="100"
+                      formControlName="state" [ngClass]="{'is-invalid': form.state.touched &&  form.state.hasError('required')}" />
+                      <div *ngIf="form.state.touched &&  form.state.hasError('required')" class="invalid-feedback">
+                        <span *ngIf=" form.state.hasError('required')">O campo Cep é obrigatório.</span>
+                      </div>
+                  </div>
+
+                </div>
+              </div>
+
+          </div>
+        </div>
+        <button type="submit" [disabled]="!customerForm.valid" class="btn btn-success" id="btn-save-event">
+          {{form.personId.value ? 'Alterar' : 'Salvar'}}
+        </button>
+      </form>
+    </div>
+  </ng-template>
+
+</div>

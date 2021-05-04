@@ -1,0 +1,115 @@
+@import '~@circlon/angular-tree-component/css/angular-tree-component.css';
+
+/* You can add global styles to this file, and also import other style files */
+.modal-holder {
+  animation-name: example;
+  animation-duration: 0.3s;
+}
+
+@keyframes example {
+  0% {
+    transform: scale(0.5)
+  }
+
+  100% {
+    transform: scale(1)
+  }
+}
+
+.carousel-item {
+  transition: opacity 0.7s ease !important;
+  position: absolute !important;
+  display: block !important;
+  opacity: 0;
+}
+
+.carousel-item.active {
+  position: relative !important;
+  opacity: 1;
+}
+
+// CSS Switch Button
+.switch-cb {
+  position: relative;
+  display: inline-block;
+  width: 28px;
+  height: 16px;
+  margin: 0;
+}
+
+.switch-cb input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: -4px;
+  bottom: -3px;
+  background-color: white;
+  border: 2px solid #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.switch-cb input:checked + .slider {
+  background-color: #34c38f;
+}
+
+.switch-cb input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+.switch-cb input:checked + .slider:before {
+border: 2px solid #34c38f;
+  -webkit-transform: translateX(15px);
+  -ms-transform: translateX(15px);
+  transform: translateX(15px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.optional-feedback {
+  font-size: 80%;
+}
+.outline {
+  border: 0.11em solid #DA9F00 !important;
+}
+.mlm-auto {
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.btn-primary {
+  border-radius: 1.5rem !important;
+  text-transform: uppercase;
+}
+
+.page-title-box h4 {
+ text-transform: capitalize;
+  font-weight: 600;
+  font-size: 16px !important;
+}
