@@ -27,7 +27,7 @@ export class CustomerComponent implements OnInit {
 
   paginationRequest: PaginationRequest = {
     pageIndex: 1,
-    pageSize: 1,
+    pageSize: 10,
     direction: 'asc',
     sort: 'Name',
   }
@@ -109,7 +109,7 @@ export class CustomerComponent implements OnInit {
       if (result.value) {
         this.customerService.delete(customer.personId)
           .subscribe(v=>{
-            this.toastService.show(`Cliente ${v.content.name} excluído com sucesso`, { classname: 'bg-success', delay: 4000})
+            this.toastService.show(`Cliente ${customer.name} excluído com sucesso`, { classname: 'bg-success', delay: 4000})
           }, ()=>{}, ()=>{
             this.loadCustomers(this.paginationRequest);
           })

@@ -6,6 +6,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UIModule } from '../shared/ui/ui.module';
 import { NgxMaskModule } from 'ngx-mask';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -18,6 +19,7 @@ import { NgxMaskModule } from 'ngx-mask';
     MainRoutingModule,
     UIModule,
     NgxMaskModule.forRoot(),
+    NgbTooltipModule,
   ]
 })
 export class MainModule { }

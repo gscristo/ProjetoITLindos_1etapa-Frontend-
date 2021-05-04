@@ -30,9 +30,9 @@
                 <tr *ngFor="let customer of customerDataPagination?.resultList">
                   <th scope="row">{{ customer?.name }}</th>
                   <td>{{ customer?.email}}</td>
-                  <td>{{ customer?.cpf}}</td>
-                  <td>{{ customer?.phone }}</td>
-                  <td>{{ customer?.address.city }}</td>
+                  <td>{{ customer?.socialNumber | mask: '000.000.000-00'}}</td>
+                  <td>{{ customer?.fone | mask: '(00) 00000-0000'}}</td>
+                  <td>{{ customer?.city }}</td>
                   <td>
                     <div class="contact-links d-flex font-size-18">
                       <div class="flex-fill">
