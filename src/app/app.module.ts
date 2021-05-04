@@ -18,6 +18,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ErrorInterceptor } from './core/helpers/error.interceptor';
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
+import { LoaderInterceptorService } from './core/services/interceptors/loader-interceptor.service';
 
 
 export function createTranslateLoader(http: HttpClient): any {
@@ -50,8 +51,9 @@ export function createTranslateLoader(http: HttpClient): any {
   ],
   bootstrap: [AppComponent],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+   // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
