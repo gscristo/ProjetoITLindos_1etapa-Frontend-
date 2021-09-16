@@ -1,7 +1,35 @@
 <div class="container-fluid">
+  <!-- Remete ao título da página. É estilizado em Shared/ui/pagetitle  -->
+  <app-page-title title="Dashboard"  [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <app-loader></app-loader>
+  <img class="imgTop" src="../../../assets/images/topbar.png">
+
+ 
+
+  <div>
+  <span class="text-center pageTitle">DASHBOARD</span>
+</div>
+
+  <!-- Row onde esão os dois cards de informação da pagina -->
   <div class="row" style="height: 80vh;">
-    <div class="d-flex justify-content-center align-items-center">
-      <h1 class="display-1">Home</h1>
+    <div style="margin-left: 15% ;" class="col-md-5">
+      <!-- card referente ao produto -->
+      <div class="card" style="width: 15rem; height: 15rem;">
+        <div class="card-body cardBody">
+          <!-- double mustache puxando do ts uma váriavel resultante de uma função -->
+          <span class="card-title cardTitle">{{totalProductDataPagination}}</span>
+          <h6 class="card-subtitle mb-2 cardSubTitle">Total de produtos cadastrados</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <!-- card referente ao cliente -->
+      <div class="card" style="width: 15rem; height: 15rem;">
+        <div class="card-body cardBody">
+          <span class="card-title cardTitle">{{totalCustomerDataPagination}}</span>
+          <h6 class="card-subtitle mb-2 cardSubTitle">Total de clientes cadastrados</h6>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,132 @@
+<div class="container-fluid">
+  <!-- Remete ao título da página. É estilizado em Shared/ui/pagetitle  -->
+ <app-page-title title="Gerenciar Produtos" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+ <app-loader></app-loader>
+ <img class="imgTop" src="../../../assets/images/topbar.png">
+ <!-- Remete a tabela e ao botão de adicionar produtos -->
+ <div class="row">
+    <div class="d-flex">
+      <button class="btn btn-primary ms-auto mb-2" (click)="openModal(content, productAdd)" >Adicionar Produto</button>
+    </div>
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
+              <thead class="bg-soft bg-secondary">
+                <tr>
+                  <th>Código</th>
+                  <th>Nome</th>
+                  <th>Descrição Detalhada</th>
+                  <th>Unidade</th>
+                  <th>Valor</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <!-- Remete aos valores que aparecem na tabela de produtos ja adicionados  -->
+              <tbody>
+                <!-- ngFor funcionando como um foreach fazendo a busca dos elementos listados com o double mustache -->
+                <tr *ngFor="let product of productDataPagination?.resultList">
+                  <th scope="row">{{ product?.code }}</th>
+                  <td>{{ product?.name}}</td>
+                  <td>{{ product?.description}}</td>
+                  <td >{{ product?.unit}}</td>
+                  <td>R${{ product?.value }}</td>
+                  <td>
+                    <!-- contem os ícones com as ações de editar um cadastro e deletar -->
+                    <div class="contact-links d-flex font-size-18">
+                      <div class="flex-fill">
+                        <a href="javascript: void(0);" (click)="openModal(content, product)" ngbTooltip="Editar"><i class="bx bx-edit text-info"></i></a>
+                      </div>
+                      <div class="flex-fill">
+                        <a href="javascript: void(0);" (click)="deleteAccount(product)" ngbTooltip="Deletar"><i class="bx bx-trash text-danger"></i></a>
+                      </div>
+                      </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- <MODAL> Remete a tabela que aparece quando se clica em  Alterar ou Adicionar um produto -->
+    <ng-template #content role="document" let-modal>
+      <div class="modal-header">
+        <!--nesse double mustache temos como se fosse um if else que dependendo do Id traz um texto diferente-->
+        <h5 class="modal-title mt-0">{{form.productId.value ? 'Alterar produto' : 'Adicionar novo produto' }}</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="saveProduct()" [formGroup]="productForm">
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-3">
+                <label class="control-label">Código</label>
+                <input class="form-control" placeholder="Digite o código" type="text" name="code" maxlength="50"
+                  formControlName="code" [ngClass]="{ 'is-invalid': form.code.hasError('required') && form.code.touched }" />
+                <div *ngIf="form.code.hasError('required') && form.code.touched" class="invalid-feedback">
+                  <span *ngIf="form.code.hasError('required') && form.code.touched">O campo Código é obrigatório</span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="control-label">Nome</label>
+                <input class="form-control" placeholder="Digite o Nome" type="text" name="name" maxlength="150"
+                  formControlName="name" [ngClass]="{'is-invalid': form.name.hasError('required') && form.name.touched}" />
+                <div *ngIf="form.name.hasError('required') && form.name.touched" class="invalid-feedback">
+                  <span *ngIf="form.name.hasError('required') && form.name.touched">O campo Nome é obrigatório</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="control-label">Valor</label>
+                    <!-- nesse input foi utilizado esse prefix, mask e thseparator como uma máscara para validar a moeda -->
+                    <input prefix="R$" mask="separator.2 "thousandSeparator="." class="form-control" placeholder="Digite o valor" type="text" name="value" maxlength="99"
+                      formControlName="value" [ngClass]="{'is-invalid': form.value.touched &&  form.value.hasError('required')}" />
+                      <div *ngIf="form.value.touched &&  form.value.hasError('required')" class="invalid-feedback">
+                        <span *ngIf=" form.value.hasError('required')">O campo Valor é obrigatório.</span>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="control-label">Unidade</label>
+                    <!-- nesse ngClass temos a validação dos campos obrigatórios usando ativando a classe is-invalid atraves das condições citadas -->
+                    <select [ngClass]="{'is-invalid': form.unit.hasError('required') && form.unit.touched}" formControlName="unit" class="form-select" aria-label="Escolha a unidade do produto." >
+                      <!-- aqui foi utilizado uma caixa de seleção com a unidades estabelecidas no escopo -->
+                      <option value="" selected>Escolha a unidade.</option>
+                      <option value="PC">PC</option>
+                      <option value="KG">KG</option>
+                      <option value="UN">UN</option>
+                      <option value="ML">ML</option>
+                      <option value="CJ">CJ</option>
+                    </select>
+                    <div *ngIf="form.unit.hasError('required') && form.unit.touched" class="invalid-feedback">
+                      <span *ngIf="form.unit.hasError('required') && form.unit.touched">O campo unidade é obrigatório</span>
+                    </div>
+                  </div>
+                </div>
+            </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="mb-3">
+                      <label class="control-label">Descrição Detalhada</label>
+                      <div class="form-floating">
+                        <textarea formControlName="description" class="form-control" placeholder="Digite a descrição do produto." id="floatingTextarea2" style="height: 100px"></textarea>
+                        <label style="font-size: 8px;" for="floatingTextarea2">Descrição detalhada do produto.</label>
+                      </div>
+                    </div>
+                  </div>
+               </div>
+              </div>
+          </div>
+          <button type="submit" [disabled]="!productForm.valid" class="btn btn-primary" id="btn-save-event">
+            {{form.productId.value ? 'Alterar' : 'Salvar'}}
+          </button>
+        </form>
+      </div>
+    </ng-template>
+</div>    

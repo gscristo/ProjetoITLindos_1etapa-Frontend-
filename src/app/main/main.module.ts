@@ -7,11 +7,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UIModule } from '../shared/ui/ui.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { productComponent } from './product/product.component';
 
 
 
 @NgModule({
-  declarations: [HomeComponent, CustomerComponent],
+  declarations: [HomeComponent, CustomerComponent, productComponent],
   imports: [
     CommonModule,
     FormsModule,

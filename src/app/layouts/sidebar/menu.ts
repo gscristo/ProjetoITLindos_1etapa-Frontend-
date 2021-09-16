@@ -7,6 +7,12 @@ export const MENU: MenuItem[] = [
         isTitle: true
     },
     {
+        id: 4,
+        label: 'Dashboard',
+        link: '/home',
+        icon: 'bxs-report',
+    },
+    {
         id: 2,
         label: 'Clientes',
         link: '/customer',
@@ -15,8 +21,8 @@ export const MENU: MenuItem[] = [
     {
         id: 3,
         label: 'Produtos',
-        link: '/',
-        icon: 'bx-book',
+        link: '/product',
+        icon: 'bx-basket',
     },
 
 ];

@@ -1,0 +1,41 @@
+// topbar
+.imgTop{
+  margin-top: -13%;
+  margin-left: -4%;
+}
+
+#crumb{
+  color:white;
+
+}
+// Titulo da pagina
+
+.pageTitle{
+
+  margin-top: 5%;
+  font-size: 60px;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  margin-bottom: 5%;
+
+}
+
+// Estilização dos cards
+.cardBody{
+    background-color:rgb(204,0,0) ;
+    border-radius: 25px;
+    opacity: 85%;
+}
+.cardTitle{
+  font-size: 100px;
+  color:aliceblue;
+  display: block;
+  text-align: center;
+}
+.cardSubTitle{
+  font-size: 20px ;
+  color:aliceblue;
+  display: block;
+  text-align: center;
+}
